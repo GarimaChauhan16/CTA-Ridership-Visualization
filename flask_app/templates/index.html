@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CTA Ridership</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="static/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body style="background-color : #f2f1f0">
+  
+  <!-- The div that holds our map -->
+<div class="container background">
+  <div class="row">
+    <div class="col-md-12 jumbotron text-center" style="background-color:#5252a1">
+      <h1>CTA Ridership Dashboard</h1>
+        <p>Use the interactive charts below to explore the dataset</p>
+    </div>
+  </div>
+</div>
+<div class = "row-map">
+  <div class="col-md-3 col-sm-6">
+    <div class="well year" style="background-color:#c3c3d4">
+      <h5 class = "font">Select Year:</h5>
+      <select id="selDatasetYear" onchange="yearChanged(this.value)"></select>
+    </div>
+  </div>
+</div>
+<div class = "row">
+  <div class="col-md-6">
+    <div id="map-holder">
+      <div class="container fill" id="map-cont">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="row">
+    <div class="col-md-3 col-sm-6 metadata">
+      <div class="well station" style="background-color:#c3c3d4">
+        <h5 class = "font">Select Station:</h5>
+        <select id="selDataset" onchange="optionChanged(this.value)"></select>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Station Info</h3>
+        </div>
+        <div id="sample-metadata" class="panel-body"></div>
+      </div>
+    </div> 
+    <div class="col-xs-6 col-sm-8">
+      <div id="line"></div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-6 col-sm-9">
+      <div id="bar"></div>
+    </div>
+  </div>
+</div>
+
+
+   <!-- D3 -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+   <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+   <script src="https://d3js.org/d3-request.v1.min.js"></script>
+   <!-- <script src="https://d3js.org/d3-fetch.v1.min.js"></script> -->
+   <!-- Plotly -->
+   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+   <!-- Leaflet JavaScript -->
+   <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+   <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+ 
+   <!-- API Key -->
+   <script type="text/javascript" src="static/js/config.js"></script>
+   
+   <!-- Our JavaScript -->
+   <script type="text/javascript" src="../static/js/logicmap.js"></script>
+   <script src="../static/js/app.js"></script>
+ </body>
+ </html>
