@@ -37,7 +37,7 @@ Sunday_Data = Base.classes.sunday_holiday_data
 Ten_Year_Ridership = Base.classes.ten_year_ridership
 
 
-# This is the first route
+# Create the Routes
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -84,24 +84,24 @@ def station_metadata(station):
     # print (color)
 
     colors = {}
-    line_color = []
+    line = []
 
-    # Search for values which are True in the dict and return the keys
+    # Search for values which are true in the dict and return the keys
     for key, value in color.items():
         if True == value:
-            line_color.append(key)
+            line.append(key)
 
-    # add space between list items
-    line_color = [ f' {x} ' for x in line_color]
-    colors["Line Color(s)"] = line_color
+    # Add space between list items
+    line = [ f' {x} ' for x in line]
+    colors["Line(s)"] = line
     print(colors)
 
     station_metadata = {}
     for result in results:
-        station_metadata["Station-Name"] = result[0]
+        station_metadata["Station"] = result[0]
         station_metadata["ADA"] = result[1]  
 
-    # append the line-color dict into the metadata dict
+    # Append the line dict into the metadata dict
     station_metadata.update(colors)
     return jsonify(station_metadata)
 
@@ -113,6 +113,7 @@ def stations():
     stations = [station[0] for station in db.session.query(*sel).all()]
 
     return jsonify(stations)
+
 
 @app.route("/total/<station>")
 def total_ridership(station):
@@ -198,9 +199,10 @@ def years():
 
     return jsonify(years)
 
+
 @app.route("/years/<year>")
 def ten_year_ridership(year):
-    #get list of years and column placement for iloc.  assumes year columns start at position 2
+    #Get list of years and column placement for iloc.  assumes year columns start at position 2
     startyear = 2008
     totalyears = 10
     years = [] 
@@ -217,18 +219,18 @@ def ten_year_ridership(year):
             reference = reference + 1
             references.append(reference)
     year_dict = dict(zip(years, references))
-    #get column number based on users chosen year
+    #Get column number based on users chosen year
     column = year_dict[int(year)]
     # print(column)
-    # #pull in data from the database
+    # Pull in data from the database
     stmt = db.session.query(Ten_Year_Ridership).statement
 
     df = pd.read_sql_query(stmt, db.session.bind)
-    # #get the ridership data for the year chosen
+    # Get the ridership data for the year chosen
     ridership_data = df.iloc[:, column].tolist()
     ridershipnona = [0 if math.isnan(x) else x for x in ridership_data]
     # print(ridership_data)
-    #get the list of station names.  assumes position 1 in table of database
+    # Get the list of station names.  assumes position 1 in table of database
     stations = df.iloc[:, 2].tolist()
     lat = df.iloc[:,25].tolist()
     lon = df.iloc[:,26].tolist()

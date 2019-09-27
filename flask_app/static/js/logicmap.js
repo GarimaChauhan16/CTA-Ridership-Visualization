@@ -1,5 +1,5 @@
 function wholeMap (year) {
-  //create a function to return the color for earthquake magnitude https://leafletjs.com/examples/choropleth/
+  //Create a function to return the color for ridership  https://leafletjs.com/examples/choropleth/
   function getColor(ridership) {
       return ridership > 5000000 ? '#FF0000' :
              ridership > 3000000 ? '#FF7B00' :
@@ -16,7 +16,7 @@ function wholeMap (year) {
   // Create the createMap function
   function createMap(ridershipLayer) {
     // console.log(ridershipLayer);
-    //remove all html and replace to reinitialize the map each time
+    //Remove all html and replace to reinitialize the map each time
     document.getElementById('map-cont').innerHTML = "<div id='map' style='width: 200px; height: 600px; min-height: 100%; min-width: %100; display: block;'></div>";
         // Create the tile layer that will be the background of our map
         var outdoorsmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
@@ -44,48 +44,47 @@ function wholeMap (year) {
         console.log(lLine);
 
         // Create a baseMaps object to hold the satellite layer
-        // Create a baseMaps object to hold the satellite layer
         var baseMaps={
             "Outdoor Map": outdoorsmap,
             "Light Map": light,
             "Satellite Map": satellitemap
         };
       
-        // Create an overlayMaps object to hold the earthquake layer
-      var overlayMap = {
+        // Create an overlayMaps object to hold the ridership layer
+        var overlayMap = {
         'Lines' : lLine,
         'Ridership' : ridershipLayer
-      };
+        };
       
         // Create the map object with options
         var map = L.map("map", {
           center: [41.85, -87.65],
-          zoom: 10,
-          layer: [light, overlayMap]
+          zoom: 11,
+          layers: [light, ridershipLayer, lLine]
         });
       
         // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
         L.control.layers(baseMaps, overlayMap, {collapsed: false}).addTo(map);
       
-        //create legend https://leafletjs.com/examples/choropleth/
-      var legend = L.control({position: 'bottomright'});
+        //Create the legend https://leafletjs.com/examples/choropleth/
+        var legend = L.control({position: 'bottomright'});
 
-      legend.onAdd = function (map) {
+        legend.onAdd = function (map) {
 
-    var div = L.DomUtil.create('div', 'info legend'),
+        var div = L.DomUtil.create('div', 'info legend'),
           M = 100000
           ridership = [0, 2, 4, 6, 8, 10, 20, 30, 50],
           colors =[],
-      labels = [];
+        labels = [];
 
-    // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < ridership.length; i++) {
-      div.innerHTML +=
-        '<i style="background:' + getColor((ridership[i] + 1) * M) + '"></i> ' +
-        + + ridership[i]/10 + "M" + (ridership[i + 1]/10 ? ' &ndash; ' + ridership[i + 1]/10 + "M" + '<br>' : '+');
-    }
+        // Loop through our density intervals and generate a label with a colored square for each interval
+        for (var i = 0; i < ridership.length; i++) {
+          div.innerHTML +=
+            '<i style="background:' + getColor((ridership[i] + 1) * M) + '"></i> ' +
+            + + ridership[i]/10 + "M" + (ridership[i + 1]/10 ? ' &ndash; ' + ridership[i + 1]/10 + "M" + '<br>' : '+');
+        }
 
-    return div;
+        return div;
       };
 
       legend.addTo(map);
@@ -96,14 +95,13 @@ function wholeMap (year) {
 
   // Create the createCircles function
   function createCircles(response) {
-      // Pull the "earthquakes" property off of response.data
-      //let features = response.features;
-      //console.log(features);
+      // Pull the station data from response
+
       // Initialize an array to hold circles
       let centers = [];
-      // Loop through the earthquake array
+      // Loop through the centers array
       response.forEach(station => {
-        // For each earthquake, create a circle and bind a popup with the earthquake's magnitude 
+        // For each station, create a circle and bind a popup with the earthquake's magnitude 
         let location = [station.lat, station.lon];
         //console.log(location); 
         let ridership = station.ridership.toFixed(0);
@@ -128,12 +126,12 @@ function wholeMap (year) {
       let ridershipLayer = L.layerGroup(centers);
       createMap(ridershipLayer);
   }
-    // Perform an API call to the earthquake API to get earthquake information. Call createCircles when complete
+    // Perform an API call to the year/<year> route API to get information for the user selected year. Call createCircles when complete
     var url = `/years/${year}`;
     d3.json(url, createCircles);
 
 }
-  //create a list of years to populate select options
+  //Create a list of years to populate select options
 function init (){
   var selector2 = d3.select("#selDatasetYear");
   d3.json("/years", function(error, years) {
