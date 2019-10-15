@@ -16,7 +16,7 @@ The Data set-2 (https://data.cityofchicago.org/Transportation/CTA-System-Informa
 
 ## Data Cleaning
 
-We extracted last 10 years total ridership data from the data set-1 and merged it with the sata set-2 in order to get the information about each station.
+We extracted last 10 years total ridership data from the data set-1 and merged it with the data set-2 in order to get the information about each station.
 
 ## Database and backend server
 
