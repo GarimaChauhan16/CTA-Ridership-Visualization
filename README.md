@@ -1,13 +1,4 @@
-# Project Details:
-
-## CTA Rideship Trend visualization last 10 Years.
-
-Team Members: 
-1. Amy Cleveland
-2. Gabriela Hernandez
-3. Garima Chauhan
-4. Joseph Wantroba
-5. Kelly Lao
+# CTA Rideship Trend visualization last 10 Years.
 
 ![CTA](https://66.media.tumblr.com/342ad1138cd863a717668473ab34643b/tumblr_nn89tp0aMs1qa07aro4_500.gif)
 
