@@ -2,7 +2,7 @@
 
 ![CTA](https://66.media.tumblr.com/342ad1138cd863a717668473ab34643b/tumblr_nn89tp0aMs1qa07aro4_500.gif)
 
-In this project we built a web dashboard which shows a ridership trend for the Chicago Transit Authority (CTA) over last years.
+In this project we built a web dashboard which shows a ridership trend for the Chicago Transit Authority (CTA) over the last ten years.
 
 
 ## Data Collection
